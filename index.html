@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наше Весілля</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Олександр & Марія</h1>
+            <p>Ми одружуємось!</p>
+            <div class="scroll-down">↓</div>
+        </div>
+    </section>
+
+    <section class="story">
+        <h2 data-aos="fade-right">Наша Історія</h2>
+        <div class="story-grid">
+            <div class="story-item" data-aos="zoom-in">
+                <span>2022</span>
+                <p>День нашого знайомства</p>
+            </div>
+            <div class="story-item" data-aos="zoom-in" data-aos-delay="200">
+                <span>2024</span>
+                <p>Він освідчився!</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="calendar-section" data-aos="fade-up">
+        <h2>Збережіть дату</h2>
+        <div class="calendar">
+            <div class="month">Вересень 2026</div>
+            <div class="days-grid">
+                <div>Пн</div><div>Вв</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Нд</div>
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span class="highlight">12</span><span>7</span>
+                </div>
+            <p class="note">Субота, 12 вересня о 15:00</p>
+        </div>
+    </section>
+
+    <section class="rsvp" data-aos="flip-left">
+        <h2>Ви прийдете?</h2>
+        <form id="wedding-form">
+            <input type="text" placeholder="Ваше ім'я" required>
+            <select>
+                <option>Я прийду сам(а)</option>
+                <option>Прийду з парою</option>
+                <option>На жаль, не зможу</option>
+            </select>
+            <button type="submit">Підтвердити</button>
+        </form>
+    </section>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({ duration: 1000, once: false }); // Ініціалізація
+    </script>
+</body>
+</html>
