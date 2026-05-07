@@ -2,452 +2,219 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Eternal Garden | Wedding Invitation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Олександр та Марія | Wedding Invitation</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;600&family=Playfair+Display:italic,wght@0,400;1,700&display=swap" rel="stylesheet">
-    
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- 1. СТИЛІ (додати в блок <style>) -->
 <style>
-    /* Стиль обкладинки */
+    :root {
+        --primary: #B08D8D;    
+        --accent: #E7C5C6;     
+        --bg-light: #FAF7F2;   
+        --bg-secondary: #E9D8C6; 
+        --text-dark: #5C4A4A;  
+        --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body { 
+        font-family: 'Montserrat', sans-serif; 
+        background-color: var(--bg-light); 
+        color: var(--text-dark); 
+        line-height: 1.6; 
+        -webkit-tap-highlight-color: transparent; 
+    }
+
+    /* --- Виправлена Обкладинка --- */
     #cover-screen {
         position: fixed;
-        top: 0;
-        left: 0;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 1000;
+        background-color: #000;
+        transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        overflow: hidden;
+    }
+
+    #cover-screen img {
         width: 100%;
         height: 100%;
-        z-index: 1000;
-        /* Замініть URL на ваше головне фото */
-        background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
-        cursor: pointer;
-        touch-action: none;
+        object-fit: cover; /* Фото заповнює екран без деформації */
+        object-position: center; /* Центрування фото */
+        opacity: 0.8;
     }
 
-    /* Клас для анімації вильоту */
-    #cover-screen.hide {
-        transform: translateY(-100%);
-    }
+    #cover-screen.hide { transform: translateY(-100%); }
 
-    /* Анімована стрілочка */
-    .scroll-hint {
-        margin-bottom: 40px;
+    .cover-content {
+        position: absolute;
+        bottom: 50px;
+        left: 0; width: 100%;
         text-align: center;
         color: white;
-        animation: bounce 2s infinite;
     }
 
-    .scroll-hint i { font-size: 2.5rem; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
-    .scroll-hint p { font-family: sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.7rem; margin-top: 10px; }
-
-    @keyframes bounce {
-        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-        40% {transform: translateY(-15px);}
-        60% {transform: translateY(-7px);}
+    /* --- Hero Section (Головна частина) --- */
+    .hero {
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
     }
 
-    /* Контент спочатку невидимий */
-    .main-content {
-        opacity: 0;
-        transition: opacity 1s ease-in;
-        visibility: hidden;
+    .hero-bg {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        z-index: 1;
     }
-    .main-content.visible {
-        opacity: 1;
-        visibility: visible;
+    .hero-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
     }
+
+    .hero-inner { 
+        position: relative;
+        z-index: 2;
+        padding: 30px 20px; 
+        background: rgba(250, 247, 242, 0.9); 
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--accent);
+        width: 85%;
+        max-width: 400px;
+        text-align: center;
+    }
+
+    /* --- Мобільна адаптація тексту --- */
+    .main-title { font-family: 'Cinzel', serif; font-size: 2.2rem; margin: 10px 0; color: var(--text-dark); }
+    .section-title { font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 30px; text-align: center; }
+
+    /* Таймер */
+    #countdown { display: flex; justify-content: space-around; margin: 20px 0; }
+    .timer-num { display: block; font-size: 2.2rem; color: var(--primary); font-weight: 300; }
+    .timer-label { font-size: 0.7rem; text-transform: uppercase; color: #888; }
+
+    /* Кнопки */
+    .btn {
+        display: flex; align-items: center; justify-content: center; gap: 10px;
+        padding: 15px; background: var(--primary); color: white;
+        text-decoration: none; border-radius: 50px; font-size: 0.85rem;
+        text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+        border: none; margin: 10px 0; width: 100%;
+    }
+    .btn-outline { background: transparent; border: 1px solid var(--primary); color: var(--primary); }
+
+    .section-padding { padding: 60px 20px; }
+    .timeline-item { padding: 15px; background: var(--white); border-left: 4px solid var(--accent); margin-bottom: 15px; border-radius: 10px; }
 </style>
-
-<!-- 2. СТРУКТУРА (додати на початку <body>) -->
-<div id="cover-screen" onclick="openInvitation()">
-    <div class="scroll-hint">
-        <i class="fas fa-chevron-up"></i>
-        <p>Протягніть вгору</p>
-    </div>
-</div>
-
-<!-- 3. СКРИПТ (додати в блок <script>) -->
-<script>
-    function openInvitation() {
-        const cover = document.getElementById('cover-screen');
-        const content = document.getElementById('main-content');
-        
-        cover.classList.add('hide'); 
-        content.classList.add('visible');
-        
-        // Ініціалізація AOS анімацій (якщо використовуєте)
-        if (typeof AOS !== 'undefined') {
-            setTimeout(() => { AOS.init({ duration: 1000, once: true }); }, 600);
-        }
-    }
-
-    // Свайп для мобільних
-    let touchstartY = 0;
-    document.getElementById('cover-screen').addEventListener('touchstart', e => {
-        touchstartY = e.changedTouches[0].screenY;
-    }, false);
-
-    document.getElementById('cover-screen').addEventListener('touchend', e => {
-        if (touchstartY > e.changedTouches[0].screenY + 50) openInvitation();
-    }, false);
-</script>
-    <style>
-        :root {
-            --primary: #556B2F; /* Оливковий */
-            --accent: #D4AF37;  /* Золотий */
-            --bg-light: #FAF9F6;
-            --text-dark: #2C2C2C;
-            --white: #ffffff;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                        url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
-            color: var(--white);
-        }
-
-        .hero-inner { padding: 20px; z-index: 2; }
-
-        .guest-welcome {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
-
-        .main-title {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(3rem, 10vw, 6rem);
-            line-height: 1;
-            margin: 20px 0;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .hero-date {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            border-top: 1px solid rgba(255,255,255,0.4);
-            border-bottom: 1px solid rgba(255,255,255,0.4);
-            padding: 10px 0;
-            display: inline-block;
-        }
-
-        /* --- Sections --- */
-        .section-padding { padding: 120px 20px; max-width: 1200px; margin: 0 auto; }
-
-        .section-title {
-            text-align: center;
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '❦';
-            display: block;
-            font-size: 1rem;
-            color: var(--accent);
-            margin-top: 10px;
-        }
-
-        /* --- Countdown --- */
-        #countdown {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .timer-box { text-align: center; min-width: 120px; }
-
-        .timer-num {
-            display: block;
-            font-size: 4rem;
-            font-weight: 200;
-            color: var(--primary);
-            line-height: 1;
-        }
-
-        .timer-label {
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 0.8rem;
-            color: #888;
-        }
-
-        /* --- Timeline --- */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline-item {
-            padding: 30px 40px;
-            position: relative;
-            background: rgba(255,255,255,0.8);
-            backdrop-filter: blur(5px);
-            border-radius: 2px;
-            margin-bottom: 30px;
-            border-left: 3px solid var(--accent);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
-
-        .timeline-time {
-            font-weight: 600;
-            color: var(--primary);
-            display: block;
-            margin-bottom: 5px;
-            font-family: 'Cinzel', serif;
-        }
-
-        /* --- Dress Code --- */
-        .palette {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-        }
-
-        .color-circle {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        .color-circle:hover { transform: scale(1.1); }
-
-        /* --- Quote Section --- */
-        .quote-section {
-            background: linear-gradient(rgba(85, 107, 47, 0.8), rgba(85, 107, 47, 0.8)), 
-                        url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
-            padding: 150px 20px;
-            text-align: center;
-            color: var(--white);
-        }
-
-        .quote-text {
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* --- Final Contacts (Instead of RSVP) --- */
-        .final-contacts {
-            text-align: center;
-            padding: 100px 20px;
-            background: var(--white);
-        }
-
-        .contact-details {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            flex-wrap: wrap;
-        }
-
-        .contact-item h4 {
-            font-family: 'Cinzel', serif;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .contact-link {
-            display: inline-block;
-            padding: 12px 30px;
-            border: 1px solid var(--accent);
-            color: var(--text-dark);
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 0.8rem;
-            transition: all 0.3s;
-            margin-top: 15px;
-        }
-
-        .contact-link:hover {
-            background: var(--accent);
-            color: white;
-        }
-
-        footer {
-            padding: 40px;
-            text-align: center;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: #bbb;
-            text-transform: uppercase;
-        }
-
-        @media (max-width: 768px) {
-            .main-title { font-size: 3.5rem; }
-            #countdown { gap: 20px; }
-            .timer-num { font-size: 2.5rem; }
-            .contact-details { gap: 30px; }
-        }
-    </style>
 </head>
 <body>
 
-    <!-- HERO SECTION -->
+<div id="cover-screen" onclick="openInvitation()">
+    <img src="photo_5469789715482482538_y.jpg" alt="Wedding Cover">
+    <div class="cover-content">
+        <div class="scroll-hint">
+            <i class="fas fa-chevron-up"></i>
+            <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem; margin-top:10px">Натисніть, щоб відкрити</p>
+        </div>
+    </div>
+</div>
+
+<div class="main-content" id="main-content" style="display:none;">
     <section class="hero">
-        <div class="hero-inner" data-aos="fade-up" data-aos-duration="2000">
-            <p class="guest-welcome" id="guest-target">Дорогі Анна та Віктор,</p>
-            <h1 class="main-title">Олександр <br> & Марія</h1>
-            <div class="hero-date">4 Березня 2026</div>
+        <div class="hero-bg">
+        </div>
+        <div class="hero-inner" data-aos="zoom-in">
+            <p style="font-family: 'Playfair Display'; font-style: italic;" id="guest-target">Дорогі гості!</p>
+            <h1 class="main-title">Олександр <br>& Марія</h1>
+            <div style="letter-spacing: 3px; border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent); padding: 5px 0;">05.07.2026</div>
+            <button class="btn btn-outline" style="margin-top: 15px;" onclick="addToCalendar()">
+                <i class="far fa-calendar-plus"></i> В календар
+            </button>
         </div>
     </section>
 
-    <!-- COUNTDOWN -->
     <section class="section-padding" data-aos="fade-up">
-        <h2 class="section-title">Чекаємо з нетерпінням</h2>
+        <h2 class="section-title">До свята залишилось</h2>
         <div id="countdown">
-            <div class="timer-box">
-                <span class="timer-num" id="days">00</span>
-                <span class="timer-label">днів</span>
-            </div>
-            <div class="timer-box">
-                <span class="timer-num" id="hours">00</span>
-                <span class="timer-label">годин</span>
-            </div>
-            <div class="timer-box">
-                <span class="timer-num" id="mins">00</span>
-                <span class="timer-label">хвилин</span>
-            </div>
+            <div class="timer-box"><span class="timer-num" id="days">00</span><span class="timer-label">днів</span></div>
+            <div class="timer-box"><span class="timer-num" id="hours">00</span><span class="timer-label">год</span></div>
+            <div class="timer-box"><span class="timer-num" id="mins">00</span><span class="timer-label">хв</span></div>
         </div>
     </section>
 
-    <!-- TIMELINE -->
-    <section class="section-padding" style="background-color: #f1f0ec;">
-        <h2 class="section-title" data-aos="fade-up">Програма дня</h2>
-        <div class="timeline">
-            <div class="timeline-item" data-aos="fade-right">
-                <span class="timeline-time">16:00</span>
-                <h3>Welcome Drink</h3>
-                <p>Зустріч гостей у супроводі саксофону та легких закусок.</p>
-            </div>
-            <div class="timeline-item" data-aos="fade-left" data-aos-delay="200">
-                <span class="timeline-time">17:00</span>
-                <h3>Церемонія</h3>
-                <p>Початок офіційної церемонії реєстрації шлюбу.</p>
-            </div>
-            <div class="timeline-item" data-aos="fade-right" data-aos-delay="400">
-                <span class="timeline-time">18:30</span>
-                <h3>Святкова вечеря</h3>
-                <p>Початок бенкету, теплі слова та танці.</p>
-            </div>
+    <section class="section-padding" style="background: var(--bg-secondary);">
+        <h2 class="section-title">Програма дня</h2>
+        <div class="timeline-item" data-aos="fade-left">
+            <b style="color: var(--primary);">16:00</b> — Welcome Drink
+        </div>
+        <div class="timeline-item" data-aos="fade-right">
+            <b style="color: var(--primary);">17:00</b> — Церемонія
+        </div>
+        <div class="timeline-item" data-aos="fade-left">
+            <b style="color: var(--primary);">18:30</b> — Святкова вечеря
         </div>
     </section>
 
-    <!-- DRESS CODE -->
-    <section class="section-padding" style="text-align: center;">
-        <h2 class="section-title" data-aos="fade-up">Dress Code</h2>
-        <p data-aos="fade-up">Будемо вдячні за дотримання елегантного стилю в палітрі нашого весілля:</p>
-        <div class="palette" data-aos="zoom-in">
-            <div class="color-circle" style="background: #556B2F;" title="Olive"></div>
-            <div class="color-circle" style="background: #A9BA9D;" title="Sage"></div>
-            <div class="color-circle" style="background: #E8E2D6;" title="Champagne"></div>
-            <div class="color-circle" style="background: #D4AF37;" title="Gold"></div>
-            <div class="color-circle" style="background: #2C2C2C;" title="Classic Black"></div>
+    <section class="section-padding">
+        <h2 class="section-title">Локація</h2>
+        <div style="text-align: center;">
+            <h3 style="font-family: 'Cinzel'; color: var(--primary);">Soprano Inn</h3>
+            <p style="margin-bottom: 20px;">Чекаємо на вас за цією адресою:</p>
+            <a href="https://maps.app.goo.gl/vq9k8fq2YW3gBU1m7?g_st=ic" class="btn">
+                <i class="fas fa-location-arrow"></i> Прокласти маршрут
+            </a>
         </div>
     </section>
 
-    <!-- QUOTE -->
-    <section class="quote-section">
-        <div data-aos="fade-up">
-            <p class="quote-text">"Кохання — це не дивитися один на одного, а дивитися в одному напрямку."</p>
+    <section class="section-padding" style="background: var(--white);">
+        <h2 class="section-title">Зв'язок</h2>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="https://t.me/example" class="btn"><i class="fab fa-telegram-plane"></i> Координатор</a>
+            <a href="tel:+380000000000" class="btn btn-outline"><i class="fas fa-phone"></i> Зателефонувати</a>
         </div>
     </section>
 
-    <!-- FINAL BLOCK (Instead of Form) -->
-    <section class="final-contacts">
-        <div data-aos="fade-up">
-            <h2 class="section-title">Підтвердження</h2>
-            <p>Будь ласка, повідомте про вашу присутність нашому весільному координатору до 1 серпня.</p>
-            
-            <div class="contact-details">
-                <div class="contact-item">
-                    <h4>Координатор Олена</h4>
-                    <p>З питань логістики та підтвердження</p>
-                    <a href="https://t.me/example" class="contact-link"><i class="fab fa-telegram-plane"></i> Написати в Telegram</a>
-                </div>
-                <div class="contact-item">
-                    <h4>Локація</h4>
-                    <p>Villa del Garda, Italy</p>
-                    <a href="https://maps.google.com" class="contact-link"><i class="fas fa-map-marker-alt"></i> Відкрити мапу</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>A & M | 2026 | THE ETERNAL GARDEN</p>
+    <footer style="text-align: center; padding: 40px; opacity: 0.6; font-size: 0.8rem;">
+        О & М | 05.07.2026
     </footer>
+</div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        // Ініціалізація анімацій
-        AOS.init({ duration: 1000, once: true });
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    function openInvitation() {
+        document.getElementById('cover-screen').classList.add('hide');
+        const main = document.getElementById('main-content');
+        main.style.display = 'block';
+        setTimeout(() => {
+            main.style.opacity = '1';
+            AOS.init({ duration: 1000, once: true });
+        }, 100);
+    }
 
-        // ПЕРСОНАЛІЗАЦІЯ (URL name parameter)
-        const params = new URLSearchParams(window.location.search);
-        const name = params.get('name');
-        if (name) {
-            document.getElementById('guest-target').innerText = `Вітаємо, ${name}!`;
-        }
+    function addToCalendar() {
+        const url = "https://www.google.com/calendar/render?action=TEMPLATE&text=Весілля+Олександра+та+Марії&dates=20260705T130000Z/20260705T210000Z&location=Soprano+Inn";
+        window.open(url, '_blank');
+    }
 
-        // ТАЙМЕР
-        const countDate = new Date('March 4, 2026 17:00:00').getTime();
-
-        function countdown() {
-            const now = new Date().getTime();
-            const gap = countDate - now;
-
-            const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
-
-            if (gap < 0) {
-                document.getElementById('countdown').innerHTML = "<h3>Цей особливий день вже настав!</h3>";
-                return;
-            }
-
-            document.getElementById('days').innerText = Math.floor(gap / day);
-            document.getElementById('hours').innerText = Math.floor((gap % day) / hour);
-            document.getElementById('mins').innerText = Math.floor((gap % hour) / minute);
-        }
-        setInterval(countdown, 1000);
-        countdown(); // Виклик відразу
-    </script>
+    const countDate = new Date('July 5, 2026 16:00:00').getTime();
+    function countdown() {
+        const now = new Date().getTime();
+        const gap = countDate - now;
+        const second = 1000, minute = second * 60, hour = minute * 60, day = hour * 24;
+        document.getElementById('days').innerText = Math.floor(gap / day);
+        document.getElementById('hours').innerText = Math.floor((gap % day) / hour);
+        document.getElementById('mins').innerText = Math.floor((gap % hour) / minute);
+    }
+    setInterval(countdown, 1000);
+    countdown();
+</script>
 </body>
 </html>
