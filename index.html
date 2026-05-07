@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Олександр та Марія | Wedding Invitation</title>
+    <title>Андрій та Софія | Wedding Invitation</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;300;400;600&family=Playfair+Display:italic,wght@0,400;1,700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -42,8 +42,8 @@
     #cover-screen img {
         width: 100%;
         height: 100%;
-        object-fit: cover; /* Фото заповнює екран без деформації */
-        object-position: center; /* Центрування фото */
+        object-fit: cover; 
+        object-position: center; 
         opacity: 0.8;
     }
 
@@ -73,12 +73,6 @@
         top: 0; left: 0; width: 100%; height: 100%;
         z-index: 1;
     }
-    .hero-bg img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
 
     .hero-inner { 
         position: relative;
@@ -92,7 +86,6 @@
         text-align: center;
     }
 
-    /* --- Мобільна адаптація тексту --- */
     .main-title { font-family: 'Cinzel', serif; font-size: 2.2rem; margin: 10px 0; color: var(--text-dark); }
     .section-title { font-family: 'Cinzel', serif; font-size: 1.8rem; color: var(--primary); margin-bottom: 30px; text-align: center; }
 
@@ -129,10 +122,11 @@
 
 <div class="main-content" id="main-content" style="display:none;">
     <section class="hero">
-        <div class="hero-bg">
-        </div>
+        <div class="hero-bg"></div>
         <div class="hero-inner" data-aos="zoom-in">
-            <p style="font-family: 'Playfair Display'; font-style: italic;" id="guest-target">Дорогі гості!</p>
+            <p style="font-family: 'Playfair Display'; font-style: italic;" id="guest-greeting">Дорогі гості!</p>
+            <h2 id="guest-name" style="font-family: 'Playfair Display'; font-size: 1.4rem; color: var(--primary); margin-bottom: 5px;">Будемо раді вас бачити!</h2>
+            
             <h1 class="main-title">Андрій <br>& Софія</h1>
             <div style="letter-spacing: 3px; border-top: 1px solid var(--accent); border-bottom: 1px solid var(--accent); padding: 5px 0;">05.07.2026</div>
             <button class="btn btn-outline" style="margin-top: 15px;" onclick="addToCalendar()">
@@ -183,12 +177,31 @@
     </section>
 
     <footer style="text-align: center; padding: 40px; opacity: 0.6; font-size: 0.8rem;">
-        О & М | 05.07.2026
+        А & С | 05.07.2026
     </footer>
 </div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
+    // --- БАЗА ГОСТЕЙ (Додавай нових тут) ---
+    const guestData = {
+        "1": { name: "Іване та Олено", greeting: "Дорогі наші друзі!" },
+        "2": { name: "Тетяно", greeting: "Шановна пані," },
+        "parents": { name: "Найрідніші наші", greeting: "Любі батьки," }
+    };
+
+    function initGuest() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        const greetingEl = document.getElementById('guest-greeting');
+        const nameEl = document.getElementById('guest-name');
+
+        if (id && guestData[id]) {
+            greetingEl.innerText = guestData[id].greeting;
+            nameEl.innerText = guestData[id].name;
+        }
+    }
+
     function openInvitation() {
         document.getElementById('cover-screen').classList.add('hide');
         const main = document.getElementById('main-content');
@@ -200,9 +213,12 @@
     }
 
     function addToCalendar() {
-        const url = "https://www.google.com/calendar/render?action=TEMPLATE&text=Весілля+Олександра+та+Марії&dates=20260705T130000Z/20260705T210000Z&location=Soprano+Inn";
+        const url = "https://www.google.com/calendar/render?action=TEMPLATE&text=Весілля+Андрія+та+Софії&dates=20260705T130000Z/20260705T210000Z&location=Soprano+Inn";
         window.open(url, '_blank');
     }
+
+    // Запуск персоналізації
+    initGuest();
 
     const countDate = new Date('July 5, 2026 16:00:00').getTime();
     function countdown() {
