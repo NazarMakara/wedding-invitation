@@ -10,6 +10,93 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- 1. СТИЛІ (додати в блок <style>) -->
+<style>
+    /* Стиль обкладинки */
+    #cover-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        /* Замініть URL на ваше головне фото */
+        background: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+        cursor: pointer;
+        touch-action: none;
+    }
+
+    /* Клас для анімації вильоту */
+    #cover-screen.hide {
+        transform: translateY(-100%);
+    }
+
+    /* Анімована стрілочка */
+    .scroll-hint {
+        margin-bottom: 40px;
+        text-align: center;
+        color: white;
+        animation: bounce 2s infinite;
+    }
+
+    .scroll-hint i { font-size: 2.5rem; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    .scroll-hint p { font-family: sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: 0.7rem; margin-top: 10px; }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-15px);}
+        60% {transform: translateY(-7px);}
+    }
+
+    /* Контент спочатку невидимий */
+    .main-content {
+        opacity: 0;
+        transition: opacity 1s ease-in;
+        visibility: hidden;
+    }
+    .main-content.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+</style>
+
+<!-- 2. СТРУКТУРА (додати на початку <body>) -->
+<div id="cover-screen" onclick="openInvitation()">
+    <div class="scroll-hint">
+        <i class="fas fa-chevron-up"></i>
+        <p>Протягніть вгору</p>
+    </div>
+</div>
+
+<!-- 3. СКРИПТ (додати в блок <script>) -->
+<script>
+    function openInvitation() {
+        const cover = document.getElementById('cover-screen');
+        const content = document.getElementById('main-content');
+        
+        cover.classList.add('hide'); 
+        content.classList.add('visible');
+        
+        // Ініціалізація AOS анімацій (якщо використовуєте)
+        if (typeof AOS !== 'undefined') {
+            setTimeout(() => { AOS.init({ duration: 1000, once: true }); }, 600);
+        }
+    }
+
+    // Свайп для мобільних
+    let touchstartY = 0;
+    document.getElementById('cover-screen').addEventListener('touchstart', e => {
+        touchstartY = e.changedTouches[0].screenY;
+    }, false);
+
+    document.getElementById('cover-screen').addEventListener('touchend', e => {
+        if (touchstartY > e.changedTouches[0].screenY + 50) openInvitation();
+    }, false);
+</script>
     <style>
         :root {
             --primary: #556B2F; /* Оливковий */
